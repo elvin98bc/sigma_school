@@ -1,0 +1,31 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+button {
+    background-color: #2FB195;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    height: 50px;
+    cursor: pointer;
+
+}
+
+button:hover{
+    background-color: silver;
+}
+
+#counter {
+    font-size: 140px;
+    margin: 0px;
+    background-image: linear-gradient(0deg,#007bff,#00ff88);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
