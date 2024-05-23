@@ -1,14 +1,14 @@
 const movieInfo = document.getElementById("movieInfo");
-const movieTitleInput = document.getElementById("movieTitle");
+const movieTitleInput = document.getElementById("titleInput");
 
 async function fetchData(searchInput) {
-  const encodedMovieTitle = encodeURIComponent(searchInput.value);
+  const encodedMovieTitle = encodeURIComponent(searchInput);
   const response = await fetch(
     `https://www.omdbapi.com/?t=${encodedMovieTitle}&apikey=258a2345#`
   );
 
   if (response.ok) {
-    const data = response.json();
+    const data = await response.json();
     return data;
   } else {
     throw new Error("Error fetching movie info.");
@@ -16,30 +16,24 @@ async function fetchData(searchInput) {
 }
 
 function formatMovieinfo(movieData) {
-  const formattedData = [];
-  const movieTitleString = movieData.Title;
-  const movieYear = movieData.Year;
-
-  formattedData.push(`
-        <p>
-            ${movieTitleString}
-        </p>
-    `);
-
-  return formattedData;
+  return `
+        <p><strong>${movieData.Title} </strong></p>
+        <img src= "${movieData.Poster}" alt="poster">
+        <p>Director: ${movieData.Director}</p>
+        <p>Rating: ${movieData.Ratings[0].Value}</p>
+`;
 }
 
 function displayMovieInfo(searchInput) {
   movieInfo.innerHTML = "Loading";
   fetchData(searchInput)
     .then((movieData) => {
-      const formattedMovieDInfo = formatMovieinfo(movieData);
-      movieInfo.innerHTML = formattedMovieDInfo;
+      const formattedMovieInfo = formatMovieinfo(movieData);
+      movieInfo.innerHTML = formattedMovieInfo;
     })
     .catch((error) => {
       console.error("Error:", error);
-      movieInfo.innerHTML =
-        "Failed to fetch bus arrival data. Please check the bus stop ID and try again.";
+      movieInfo.innerHTML = "Failed to fetch movie data.";
     });
 }
 
